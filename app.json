@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "bike-turismo",
+    "slug": "bike-turismo",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "bike-turismo"
+}
