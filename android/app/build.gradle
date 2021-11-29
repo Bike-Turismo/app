@@ -1,4 +1,6 @@
 apply plugin: "com.android.application"
+// Firebase
+apply plugin: 'com.google.gms.google-services'
 
 import com.android.build.OutputFile
 
@@ -132,11 +134,13 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.biketurismo"
+        applicationId "app.web.biketurismo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        // Firebase
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -184,9 +188,13 @@ android {
 }
 
 dependencies {
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    // Firebase
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";
@@ -212,7 +220,7 @@ dependencies {
             implementation 'com.facebook.fresco:animated-webp:2.0.0'
         }
     }
-    
+
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

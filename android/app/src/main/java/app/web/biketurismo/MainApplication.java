@@ -1,4 +1,7 @@
-package com.biketurismo;
+package app.web.biketurismo;
+
+// Firebase
+import androidx.multidex.MultiDexApplication;
 
 import android.app.Application;
 import android.content.Context;
@@ -21,7 +24,7 @@ import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends MultiDexApplication implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
     this,
     new ReactNativeHost(this) {
@@ -85,7 +88,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.biketurismo.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("app.web.biketurismo.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

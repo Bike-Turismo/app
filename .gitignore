@@ -53,3 +53,11 @@ buck-out/
 .expo/
 web-build/
 dist/
+
+# Package manager
+yarn.lock
+package.lock.json
+
+google-services.json
+
+firebase-config.json
