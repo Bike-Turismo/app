@@ -7,7 +7,7 @@ interface IAuthMethods {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { googleSignIn, onAuthStateChanged, signOut }: IAuthMethods = require('./auth/firebase');
+const { googleSignIn, onAuthStateChanged, signOut }: IAuthMethods = require('./auth');
 
 export { googleSignIn, onAuthStateChanged, signOut };
 
@@ -25,6 +25,6 @@ const {
   updateDoc,
   deleteDoc,
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-} = require('./firestore/firebase');
+} = require('./firestore');
 
 export { getDocRef, getCollectionRef, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc };
