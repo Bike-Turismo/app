@@ -9,7 +9,11 @@ module.exports = function(api) {
       ["module-resolver", {
         "alias": {
           'pages': './src/pages',
-          'routes': './src/routes'
+          'routes': './src/routes',
+          'utils': './src/utils',
+          'errors': './src/errors',
+          'repositories': './src/repositories',
+          'models': './src/models',
         }
       }]
     ]
