@@ -27,7 +27,9 @@ module.exports = {
     'prettier'
   ],
   rules: {
+    'class-methods-use-this': 'off',
     'func-names': 'off',
+    'no-underscore-dangle': 'off',
     'react/function-component-definition': 'off',
     'react/react-in-jsx-scope': 'off',
     'import/no-extraneous-dependencies': ['error', {'devDependencies': true}],
