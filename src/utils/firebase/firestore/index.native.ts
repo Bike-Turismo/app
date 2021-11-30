@@ -1,6 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import app from '@react-native-firebase/app';
 import '@react-native-firebase/firestore';
-import { CollectionReference, DocumentData, DocumentReference, UpdateData, UpdateFields } from './types';
+import {
+  CollectionReference,
+  DocumentData,
+  DocumentReference,
+  UpdateData,
+  UpdateFields,
+  FieldPath,
+  WhereFilterOp,
+  Query,
+} from './types';
 
 const db = app.firestore();
 
@@ -15,16 +25,34 @@ const getDocRef = (path: string, ...pathSegments: string[]) => db.doc(buildPath(
 
 const getCollectionRef = (path: string, ...pathSegments: string[]) => db.collection(buildPath(path, ...pathSegments));
 
-const getDoc = (ref: DocumentReference<DocumentData>) => ref.get();
+const getDoc = (docRef: DocumentReference<DocumentData>) => docRef.get();
 
-const getDocs = (ref: CollectionReference<DocumentData>) => ref.get();
+const getDocs = (collectionRef: CollectionReference<DocumentData>) => collectionRef.get();
 
-const addDoc = (ref: CollectionReference<DocumentData>, data: DocumentData) => ref.doc().set(data);
+const addDoc = (collectionRef: CollectionReference<DocumentData>, data: DocumentData) => collectionRef.doc().set(data);
 
-const setDoc = (ref: DocumentReference<DocumentData>, data: DocumentData) => ref.set(data);
+const setDoc = (docRef: DocumentReference<DocumentData>, data: DocumentData) => docRef.set(data);
 
-const updateDoc = (ref: DocumentReference<DocumentData>, data: UpdateData<UpdateFields>) => ref.update(data);
+const updateDoc = (docRef: DocumentReference<DocumentData>, data: UpdateData<UpdateFields>) => docRef.update(data);
 
-const deleteDoc = (ref: DocumentReference<DocumentData>) => ref.delete();
+const deleteDoc = (docRef: DocumentReference<DocumentData>) => docRef.delete();
 
-export { getDocRef, getCollectionRef, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc };
+const where = (
+  docRef: CollectionReference<DocumentData>,
+  [{ fieldPath: firstFieldPath, opStr: firstOpStr, value: firstValue }, ...querys]: Array<{
+    fieldPath: string | FieldPath;
+    opStr: WhereFilterOp;
+    value: unknown;
+  }>,
+) => {
+  // Adding this to get the correct type, if you do know a better way, send a PR
+  let newRef = docRef.where(firstFieldPath, firstOpStr, firstValue);
+
+  querys.forEach(({ fieldPath, opStr, value }) => {
+    newRef = docRef.where(fieldPath, opStr, value);
+  }, docRef);
+
+  return newRef;
+};
+
+export { getDocRef, getCollectionRef, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, where };

@@ -10,11 +10,14 @@ import {
   setDoc as setDocument,
   updateDoc as updateDocument,
   deleteDoc as deleteDocument,
+  query as queryCollection,
+  where as whereCollection,
   CollectionReference,
   DocumentReference,
   DocumentData,
   WithFieldValue,
   UpdateData,
+  FieldPath,
 } from 'firebase/firestore';
 import firebaseConfig from '../../../../firebase-config.json';
 import { UpdateFields } from './types';
@@ -27,16 +30,29 @@ const getDocRef = (path: string, ...pathSegments: string[]) => doc(db, path, ...
 
 const getCollectionRef = (path: string, ...pathSegments: string[]) => collection(db, path, ...pathSegments);
 
-const getDoc = (ref: DocumentReference<DocumentData>) => getDocument(ref);
+const getDoc = (docRef: DocumentReference<DocumentData>) => getDocument(docRef);
 
-const getDocs = (ref: CollectionReference<DocumentData>) => getCollection(ref);
+const getDocs = (collectionRef: CollectionReference<DocumentData>) => getCollection(collectionRef);
 
-const addDoc = (ref: CollectionReference<DocumentData>, data: WithFieldValue<DocumentData>) => addDocument(ref, data);
+const addDoc = (collectionRef: CollectionReference<DocumentData>, data: WithFieldValue<DocumentData>) =>
+  addDocument(collectionRef, data);
 
-const setDoc = (ref: DocumentReference<DocumentData>, data: WithFieldValue<DocumentData>) => setDocument(ref, data);
+const setDoc = (docRef: DocumentReference<DocumentData>, data: WithFieldValue<DocumentData>) =>
+  setDocument(docRef, data);
 
-const updateDoc = (ref: DocumentReference<DocumentData>, data: UpdateData<UpdateFields>) => updateDocument(ref, data);
+const updateDoc = (docRef: DocumentReference<DocumentData>, data: UpdateData<UpdateFields>) =>
+  updateDocument(docRef, data);
 
-const deleteDoc = (ref: DocumentReference<DocumentData>) => deleteDocument(ref);
+const deleteDoc = (docRef: DocumentReference<DocumentData>) => deleteDocument(docRef);
 
-export { getDocRef, getCollectionRef, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc };
+type WhereFilterOp = '<' | '<=' | '==' | '!=' | '>=' | '>' | 'array-contains' | 'in' | 'array-contains-any' | 'not-in';
+
+const where = (
+  collectionRef: CollectionReference<DocumentData>,
+  querys: Array<{ fieldPath: string | FieldPath; opStr: WhereFilterOp; value: unknown }>,
+) => {
+  const whereQuerys = querys.map(({ fieldPath, opStr, value }) => whereCollection(fieldPath, opStr, value));
+  return queryCollection(collectionRef, ...whereQuerys);
+};
+
+export { getDocRef, getCollectionRef, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, where };
