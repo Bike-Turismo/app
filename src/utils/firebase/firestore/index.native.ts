@@ -9,7 +9,6 @@ import {
   UpdateFields,
   FieldPath,
   WhereFilterOp,
-  Query,
 } from './types';
 
 const db = app.firestore();

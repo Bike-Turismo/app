@@ -13,3 +13,6 @@ export type UpdateData<T> = Partial<T>;
 export type WhereFilterOp = FirebaseFirestoreTypes.WhereFilterOp;
 export type FieldPath = FirebaseFirestoreTypes.FieldPath;
 export type Query<T> = FirebaseFirestoreTypes.Query<T>;
+export type DocumentSnapshot<T> = FirebaseFirestoreTypes.DocumentSnapshot<T>;
+export type QuerySnapshot<T> = FirebaseFirestoreTypes.QuerySnapshot<T>;
+export type WithFieldValue<T> = FirebaseFirestoreTypes.WithFieldValue<T>;
