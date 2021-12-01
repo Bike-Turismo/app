@@ -20,7 +20,7 @@ import {
   FieldPath,
 } from 'firebase/firestore';
 import firebaseConfig from '../../../../firebase-config.json';
-import { UpdateFields } from './types';
+import { QueryBuilder, UpdateFields } from './types';
 
 initializeApp(firebaseConfig);
 
@@ -45,12 +45,7 @@ const updateDoc = (docRef: DocumentReference<DocumentData>, data: UpdateData<Upd
 
 const deleteDoc = (docRef: DocumentReference<DocumentData>) => deleteDocument(docRef);
 
-type WhereFilterOp = '<' | '<=' | '==' | '!=' | '>=' | '>' | 'array-contains' | 'in' | 'array-contains-any' | 'not-in';
-
-const where = (
-  collectionRef: CollectionReference<DocumentData>,
-  querys: Array<{ fieldPath: string | FieldPath; opStr: WhereFilterOp; value: unknown }>,
-) => {
+const where = (collectionRef: CollectionReference<DocumentData>, querys: Array<QueryBuilder>) => {
   const whereQuerys = querys.map(({ fieldPath, opStr, value }) => whereCollection(fieldPath, opStr, value));
   return queryCollection(collectionRef, ...whereQuerys);
 };

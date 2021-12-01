@@ -23,7 +23,7 @@ export interface IFirestoreMethods {
   getDocRef(path: string, ...pathSegments: string[]): DocumentReference<DocumentData>;
   getCollectionRef(path: string, ...pathSegments: string[]): CollectionReference<DocumentData>;
   getDoc(docRef: DocumentReference<DocumentData>): Promise<DocumentSnapshot<DocumentData>>;
-  getDocs(collectionRef: CollectionReference<DocumentData>): Promise<QuerySnapshot<DocumentData>>;
+  getDocs(collectionRef: CollectionReference<DocumentData> | Query<DocumentData>): Promise<QuerySnapshot<DocumentData>>;
   addDoc(
     collectionRef: CollectionReference<DocumentData>,
     data: WithFieldValue<DocumentData>,

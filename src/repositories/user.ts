@@ -8,8 +8,7 @@ class UserRepository {
   public async getUserByName({ name }: UserModel) {
     try {
       const collection = getCollectionRef(UserRepository.collection);
-      const qs = [{ fieldPath: 'name', opStr: '==', value: name }];
-      const query = where(collection, qs);
+      const query = where(collection, [{ fieldPath: 'name', opStr: '==', value: name }]);
       const queryResult = await getDocs(query).catch(() =>
         Promise.reject(new AppError('Query exception when finding user by name')),
       );

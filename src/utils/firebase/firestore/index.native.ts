@@ -9,6 +9,7 @@ import {
   UpdateFields,
   FieldPath,
   WhereFilterOp,
+  QueryBuilder,
 } from './types';
 
 const db = app.firestore();
@@ -38,11 +39,7 @@ const deleteDoc = (docRef: DocumentReference<DocumentData>) => docRef.delete();
 
 const where = (
   docRef: CollectionReference<DocumentData>,
-  [{ fieldPath: firstFieldPath, opStr: firstOpStr, value: firstValue }, ...querys]: Array<{
-    fieldPath: string | FieldPath;
-    opStr: WhereFilterOp;
-    value: unknown;
-  }>,
+  [{ fieldPath: firstFieldPath, opStr: firstOpStr, value: firstValue }, ...querys]: Array<QueryBuilder>,
 ) => {
   // Adding this to get the correct type, if you do know a better way, send a PR
   let newRef = docRef.where(firstFieldPath, firstOpStr, firstValue);
