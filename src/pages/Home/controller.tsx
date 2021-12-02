@@ -11,9 +11,18 @@ function getRoutes(city: string) {
 
 const useController = (Component: FC<Props>) => {
   const [city, setCity] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
   const [routes, setRoutes] = useState<Array<RouteModel>>([]);
 
   const cityState: ICityState = [city, (v: string) => setCity(v)];
+
+  const handleOnFocusCity = () => {
+    setIsSearching(true);
+  };
+
+  const handleOnBlurCity = () => {
+    !city && setIsSearching(false);
+  };
 
   const handleOnSubmitSearch = useCallback(() => {
     const getResources = async () => {
@@ -28,7 +37,16 @@ const useController = (Component: FC<Props>) => {
     getResources();
   }, [city]);
 
-  return <Component handleOnSubmitSearch={handleOnSubmitSearch} cityState={cityState} routes={routes} />;
+  return (
+    <Component
+      handleOnSubmitSearch={handleOnSubmitSearch}
+      isSearching={isSearching}
+      handleOnFocusCity={handleOnFocusCity}
+      handleOnBlurCity={handleOnBlurCity}
+      cityState={cityState}
+      routes={routes}
+    />
+  );
 };
 
 export default useController;
