@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 
-import { getAuth, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { IUserAuth } from './types';
 import firebaseConfig from '../../../../firebase-config.json';
 
@@ -11,7 +11,7 @@ const auth = getAuth();
 const googleSignIn = () => {
   const provider = new GoogleAuthProvider();
 
-  return signInWithRedirect(auth, provider);
+  return signInWithPopup(auth, provider);
 };
 
 const onAuthStateChanged = (callback: (user: IUserAuth | null) => void) => {
