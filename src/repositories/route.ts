@@ -1,32 +1,34 @@
 import AppError from 'errors/app-error';
-import UserModel, { IUser } from 'models/user';
+import RouteModel, { IRoute } from 'models/route';
 import { getCollectionRef, where, getDocs } from 'utils/firebase';
 
-class UserRepository {
-  public static readonly collection = 'users';
+class RouteRepository {
+  public static readonly collection = 'routes';
 
-  public async getUserByName({ name }: UserModel) {
+  public async getRoutesByName({ name }: RouteModel): Promise<Array<RouteModel> | null> {
     try {
-      const collection = getCollectionRef(UserRepository.collection);
+      const collection = getCollectionRef(RouteRepository.collection);
       const query = where(collection, [{ fieldPath: 'name', opStr: '==', value: name }]);
       const queryResult = await getDocs(query).catch(() =>
         Promise.reject(new AppError('Query exception when finding user by name')),
       );
 
       if (queryResult.empty) {
-        throw new AppError('User not found by name');
+        return null;
       }
+
       const doc = queryResult.docs[0];
       if (doc.exists) {
-        const data = doc.data();
+        const data = new RouteModel({ ...doc.data(), index: doc.id });
 
-        return data as IUser;
+        return [data];
       }
-      throw new AppError('User does not exist');
+
+      return null;
     } catch (err) {
       return Promise.reject(err);
     }
   }
 }
 
-export default UserRepository;
+export default RouteRepository;

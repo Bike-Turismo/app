@@ -1,14 +1,12 @@
 import React, { FC } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SignIn } from 'pages';
+import { PropsGroup } from './types';
 
-const Stack = createNativeStackNavigator();
-
-const AuthRoutes: FC = function () {
+const AuthRoutes: FC<PropsGroup> = function ({ Stack }: PropsGroup) {
   return (
-    <Stack.Navigator>
+    <Stack.Group>
       <Stack.Screen name="SignIn" component={SignIn} />
-    </Stack.Navigator>
+    </Stack.Group>
   );
 };
 
