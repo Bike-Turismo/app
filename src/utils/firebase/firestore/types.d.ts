@@ -15,6 +15,7 @@ export type FieldPath = FirebaseFirestoreTypes.FieldPath;
 export type Query<T> = FirebaseFirestoreTypes.Query<T>;
 export type DocumentSnapshot<T> = FirebaseFirestoreTypes.DocumentSnapshot<T>;
 export type QuerySnapshot<T> = FirebaseFirestoreTypes.QuerySnapshot<T>;
+export type QueryDocumentSnapshot<T> = FirebaseFirestoreTypes.QueryDocumentSnapshot<T>;
 export type WithFieldValue<T> = FirebaseFirestoreTypes.WithFieldValue<T>;
 
 // Custom

@@ -1,4 +1,3 @@
-import { CollectionReference, DocumentData, OrderByBuilder, Query, QueryBuilder } from './firestore/types';
 import { IAuthMethods, IFirestoreMethods } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
