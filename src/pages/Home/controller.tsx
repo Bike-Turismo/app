@@ -6,29 +6,26 @@ import { ICityState, Props } from './types';
 function getRoutes(city: string) {
   const routerRepository = new RouteRepository();
   const routeModel = new RouteModel({ name: city });
-  return routerRepository.getRoutesByName(routeModel);
+  return routerRepository.getRoutesByCity(routeModel);
 }
 
 const useController = (Component: FC<Props>) => {
   const [city, setCity] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [routes, setRoutes] = useState<Array<RouteModel>>([]);
+  const [routesHeading, setRoutesHeading] = useState('');
 
   const cityState: ICityState = [city, (v: string) => setCity(v)];
-
-  const handleOnFocusCity = () => {
-    setIsSearching(true);
-  };
-
-  const handleOnBlurCity = () => {
-    !city && routes.length === 0 && setIsSearching(false);
-  };
 
   const handleOnSubmitSearch = useCallback(() => {
     const getResources = async () => {
       try {
         const newRoutes = await getRoutes(city);
         newRoutes && setRoutes(newRoutes);
+        setIsSearching(true);
+        const citye = 'Dois Vizinhos';
+        const state = 'PR';
+        setRoutesHeading(`Trilhas em ${citye}, ${state}`);
       } catch (error) {
         console.error(error);
       }
@@ -41,10 +38,9 @@ const useController = (Component: FC<Props>) => {
     <Component
       handleOnSubmitSearch={handleOnSubmitSearch}
       isSearching={isSearching}
-      handleOnFocusCity={handleOnFocusCity}
-      handleOnBlurCity={handleOnBlurCity}
       cityState={cityState}
       routes={routes}
+      routesHeading={routesHeading}
     />
   );
 };

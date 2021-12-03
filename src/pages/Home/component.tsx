@@ -1,16 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { FC } from 'react';
-import { Box, Button, Input, Flex, Text, Stack, ScrollView, PresenceTransition } from 'native-base';
+import { Box, Button, Input, Flex, Text, Stack, ScrollView, PresenceTransition, Heading } from 'native-base';
 import { ItemRoute } from 'components';
 import { Props } from './types';
 
 const Component: FC<Props> = ({
   cityState: [city, handleOnChangeCity],
   isSearching,
-  handleOnFocusCity,
-  handleOnBlurCity,
   handleOnSubmitSearch,
   routes,
+  routesHeading,
 }: Props) => {
   return (
     <ScrollView>
@@ -20,11 +19,13 @@ const Component: FC<Props> = ({
             visible={!isSearching}
             initial={{
               opacity: 0,
+              scale: 0,
             }}
             animate={{
               opacity: 1,
+              scale: 1,
               transition: {
-                duration: 200,
+                duration: 250,
               },
             }}
           >
@@ -38,8 +39,6 @@ const Component: FC<Props> = ({
               flex={1}
               mr="20px"
               value={city}
-              onFocus={handleOnFocusCity}
-              onBlur={handleOnBlurCity}
               onChangeText={handleOnChangeCity}
               placeholder="Nome da cidade"
               onSubmitEditing={handleOnSubmitSearch}
@@ -48,7 +47,10 @@ const Component: FC<Props> = ({
               Pesquisar
             </Button>
           </Flex>
-          <Stack pt="4" space={2}>
+          <Heading pt="2" size="md">
+            {routesHeading}
+          </Heading>
+          <Stack pt="1" space={2}>
             {routes.map(route => (
               <ItemRoute key={route.index} route={route} />
             ))}
