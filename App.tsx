@@ -1,12 +1,15 @@
 import React, { FC } from 'react';
 import { NativeBaseProvider } from 'native-base';
 import Routes from 'routes';
+import AppProvider from 'hooks';
 
 const App: FC = () => {
   return (
-    <NativeBaseProvider>
-      <Routes />
-    </NativeBaseProvider>
+    <AppProvider>
+      <NativeBaseProvider>
+        <Routes />
+      </NativeBaseProvider>
+    </AppProvider>
   );
 };
 

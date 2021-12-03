@@ -15,7 +15,7 @@ const googleSignIn = () => {
 };
 
 const onAuthStateChanged = (callback: (user: IUserAuth | null) => void) => {
-  return auth.onAuthStateChanged(user => {
+  const unsubscribe = auth.onAuthStateChanged(user => {
     if (user !== null) {
       return callback({
         email: user.email,
@@ -23,6 +23,10 @@ const onAuthStateChanged = (callback: (user: IUserAuth | null) => void) => {
     }
     return callback(null);
   });
+
+  return () => {
+    unsubscribe();
+  };
 };
 
 const signOut = () => {

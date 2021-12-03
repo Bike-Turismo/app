@@ -21,7 +21,7 @@ const useController = (Component: FC<Props>) => {
   };
 
   const handleOnBlurCity = () => {
-    !city && setIsSearching(false);
+    !city && routes.length === 0 && setIsSearching(false);
   };
 
   const handleOnSubmitSearch = useCallback(() => {

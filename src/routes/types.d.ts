@@ -22,7 +22,7 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
-  HomeScreen: undefined;
+  Home: undefined;
   Route: undefined;
 };
 

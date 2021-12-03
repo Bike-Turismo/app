@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -9,7 +9,7 @@ import { HeaderRight, HeaderTitle } from './components';
 
 const Stack = createNativeStackNavigator();
 
-const screenOptions = {
+export const screenOptions = {
   title: 'Bike turismo',
   headerTitle: HeaderTitle,
   headerStyle: {
