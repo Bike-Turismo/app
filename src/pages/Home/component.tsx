@@ -10,6 +10,7 @@ const Component: FC<Props> = ({
   handleOnSubmitSearch,
   routes,
   routesHeading,
+  localizationsAvailable,
 }: Props) => {
   return (
     <ScrollView>
@@ -35,15 +36,21 @@ const Component: FC<Props> = ({
           </PresenceTransition>
 
           <Flex mt="20px" direction="row">
-            <Input
-              flex={1}
-              mr="20px"
-              value={city}
-              onChangeText={handleOnChangeCity}
-              placeholder="Nome da cidade"
-              onSubmitEditing={handleOnSubmitSearch}
-            />
-            <Button alignSelf="center" onPress={handleOnSubmitSearch}>
+            <Box flex={1}>
+              <Input
+                mr="20px"
+                value={city}
+                onChangeText={handleOnChangeCity}
+                placeholder="Nome da cidade"
+                onSubmitEditing={handleOnSubmitSearch}
+              />
+              {localizationsAvailable.map(localization => (
+                <Text>
+                  {localization.city}, {localization.state}
+                </Text>
+              ))}
+            </Box>
+            <Button mt={0} h="36px" onPress={handleOnSubmitSearch}>
               Pesquisar
             </Button>
           </Flex>

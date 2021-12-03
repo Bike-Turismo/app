@@ -1,3 +1,4 @@
+import LocalizationModel from 'models/localization';
 import RouteModel from 'models/route';
 
 export type ICityState = [string, (v: string) => void];
@@ -8,4 +9,5 @@ export interface Props {
   cityState: ICityState;
   routes: Array<RouteModel>;
   routesHeading: string;
+  localizationsAvailable: Array<LocalizationModel>;
 }

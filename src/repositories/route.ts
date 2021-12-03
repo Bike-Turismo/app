@@ -1,20 +1,17 @@
 import AppError from 'errors/app-error';
 import RouteModel, { IRoute } from 'models/route';
-import { getCollectionRef, where, getDocs, orderBy, limit } from 'utils/firebase';
+import { getCollectionRef, where, getDocs, orderBy, limit, getDoc } from 'utils/firebase';
 import { QueryDocumentSnapshot } from 'utils/firebase/firestore/types';
 
 class RouteRepository {
   public static readonly collection = 'routes';
 
-  public async getRoutesByName({ name }: RouteModel): Promise<Array<RouteModel>> {
+  public async getRoutesByCity({ localization }: RouteModel): Promise<Array<RouteModel>> {
     try {
-      const nameInUpperCase = name?.toUpperCase();
       const collection = getCollectionRef<IRoute>(RouteRepository.collection);
-      const whereQueries = where(collection, [
-        { fieldPath: 'name_insensitive', opStr: '>=', value: nameInUpperCase },
-        { fieldPath: 'name_insensitive', opStr: '<=', value: `${nameInUpperCase}\uf8ff` },
-      ]);
-      const orderByQueries = orderBy(whereQueries, [{ fieldPath: 'name_insensitive' }]);
+
+      const whereQueries = where(collection, [{ fieldPath: 'localization', opStr: '==', value: localization }]);
+      const orderByQueries = orderBy(whereQueries, [{ fieldPath: 'name' }]);
       const limitQuery = limit(orderByQueries, 5);
 
       const queryResult = await getDocs(limitQuery).catch(() =>

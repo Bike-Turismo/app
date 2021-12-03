@@ -1,9 +1,13 @@
+import { DocumentReference } from 'utils/firebase/firestore/types';
+import { ILocalization } from './localization';
+
 export interface IRoute {
   name?: string;
   index?: string;
   description?: string;
   distance_in_kilo_meters?: number;
   preview_url?: string;
+  localization?: DocumentReference<ILocalization>;
 }
 
 class RouteModel implements IRoute {
@@ -16,6 +20,8 @@ class RouteModel implements IRoute {
   private _distance_in_kilo_meters?: number;
 
   private _preview_url?: string;
+
+  private _localization?: DocumentReference<ILocalization>;
 
   public constructor({ name, index, description, distance_in_kilo_meters, preview_url }: IRoute) {
     if (name !== undefined) this.name = name;
@@ -65,6 +71,14 @@ class RouteModel implements IRoute {
     this._preview_url = value;
   }
 
+  public get localization(): DocumentReference<ILocalization> | undefined {
+    return this._localization;
+  }
+
+  public set localization(value: DocumentReference<ILocalization> | undefined) {
+    this._localization = value;
+  }
+
   public toJSON() {
     return {
       name: this.name,
@@ -72,6 +86,7 @@ class RouteModel implements IRoute {
       description: this.description,
       distanceInKiloMeters: this.distance_in_kilo_meters,
       previewURL: this.preview_url,
+      localization: { ...(this.localization || {}) },
     };
   }
 }
