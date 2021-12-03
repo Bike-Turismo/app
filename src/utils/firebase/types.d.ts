@@ -5,7 +5,9 @@ import {
   DocumentReference,
   DocumentSnapshot,
   FieldPath,
+  OrderByBuilder,
   Query,
+  QueryBuilder,
   QuerySnapshot,
   UpdateData,
   UpdateFields,
@@ -32,11 +34,12 @@ export interface IFirestoreMethods {
   updateDoc(docRef: DocumentReference<DocumentData>, data: UpdateData<UpdateFields>): Promise<void>;
   deleteDoc(docRef: DocumentReference<DocumentData>): Promise<void>;
   where(
-    collectionRef: CollectionReference<DocumentData>,
-    querys: Array<{
-      fieldPath: string | FieldPath;
-      opStr: WhereFilterOp;
-      value: unknown;
-    }>,
+    collectionRef: CollectionReference<DocumentData> | Query<DocumentData>,
+    querys: Array<QueryBuilder>,
   ): Query<DocumentData>;
+  orderBy(
+    collectionRef: CollectionReference<DocumentData> | Query<DocumentData>,
+    querys: Array<OrderByBuilder>,
+  ): Query<DocumentData>;
+  limit(collectionRef: CollectionReference<DocumentData> | Query<DocumentData>, limitQtd: number);
 }

@@ -19,3 +19,5 @@ export type WithFieldValue<T> = FirebaseFirestoreTypes.WithFieldValue<T>;
 
 // Custom
 export type QueryBuilder = { fieldPath: string | FieldPath; opStr: WhereFilterOp; value: unknown };
+
+export type OrderByBuilder = { fieldPath: string | FieldPath; directionStr?: 'asc' | 'desc' };

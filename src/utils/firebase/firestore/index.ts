@@ -12,15 +12,16 @@ import {
   deleteDoc as deleteDocument,
   query as queryCollection,
   where as whereCollection,
+  limit as limitCollection,
+  orderBy as orderByCollection,
   CollectionReference,
   DocumentReference,
   DocumentData,
   WithFieldValue,
   UpdateData,
-  FieldPath,
 } from 'firebase/firestore';
 import firebaseConfig from '../../../../firebase-config.json';
-import { QueryBuilder, UpdateFields } from './types';
+import { OrderByBuilder, QueryBuilder, UpdateFields } from './types';
 
 initializeApp(firebaseConfig);
 
@@ -50,4 +51,12 @@ const where = (collectionRef: CollectionReference<DocumentData>, querys: Array<Q
   return queryCollection(collectionRef, ...whereQuerys);
 };
 
-export { getDocRef, getCollectionRef, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, where };
+const orderBy = (collectionRef: CollectionReference<DocumentData>, querys: Array<OrderByBuilder>) => {
+  const orderByQuerys = querys.map(({ fieldPath, directionStr }) => orderByCollection(fieldPath, directionStr));
+  return queryCollection(collectionRef, ...orderByQuerys);
+};
+
+const limit = (collectionRef: CollectionReference<DocumentData>, limitQtd: number) =>
+  queryCollection(collectionRef, limitCollection(limitQtd));
+
+export { getDocRef, getCollectionRef, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, where, orderBy, limit };

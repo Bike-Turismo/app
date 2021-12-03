@@ -7,9 +7,8 @@ import {
   DocumentReference,
   UpdateData,
   UpdateFields,
-  FieldPath,
-  WhereFilterOp,
   QueryBuilder,
+  OrderByBuilder,
 } from './types';
 
 const db = app.firestore();
@@ -51,4 +50,20 @@ const where = (
   return newRef;
 };
 
-export { getDocRef, getCollectionRef, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, where };
+const orderBy = (
+  docRef: CollectionReference<DocumentData>,
+  [{ fieldPath: firstFieldPath, directionStr: firstDirectionStr }, ...querys]: Array<OrderByBuilder>,
+) => {
+  // Adding this to get the correct type, if you do know a better way, send a PR
+  let newRef = docRef.orderBy(firstFieldPath, firstDirectionStr);
+
+  querys.forEach(({ fieldPath, directionStr }) => {
+    newRef = docRef.orderBy(fieldPath, directionStr);
+  }, docRef);
+
+  return newRef;
+};
+
+const limit = (docRef: CollectionReference<DocumentData>, limitQtd: number) => docRef.limit(limitQtd);
+
+export { getDocRef, getCollectionRef, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, where, orderBy, limit };

@@ -1,3 +1,4 @@
+import { CollectionReference, DocumentData, OrderByBuilder, Query, QueryBuilder } from './firestore/types';
 import { IAuthMethods, IFirestoreMethods } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -15,7 +16,9 @@ const {
   updateDoc,
   deleteDoc,
   where,
+  orderBy,
+  limit,
 }: // eslint-disable-next-line @typescript-eslint/no-var-requires
 IFirestoreMethods = require('./firestore');
 
-export { getDocRef, getCollectionRef, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, where };
+export { getDocRef, getCollectionRef, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, where, orderBy, limit };
