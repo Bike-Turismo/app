@@ -58,6 +58,8 @@ dist/
 yarn.lock
 package.lock.json
 
+# firebase
 google-services.json
-
 firebase-config.json
+firebase-debug.log
+.firebase
