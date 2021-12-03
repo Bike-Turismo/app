@@ -23,6 +23,7 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   HomeScreen: undefined;
+  Route: undefined;
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;

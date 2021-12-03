@@ -10,7 +10,7 @@ const useController = (Component: FC<Props>, { route }: PropsExternal) => {
   const { description, distanceInKiloMeters, name, previewURL } = route.toJSON();
 
   const handleOnPressShowRoute = () => {
-    // navigation.navigate('SignIn');
+    navigation.navigate('Route');
   };
 
   if (

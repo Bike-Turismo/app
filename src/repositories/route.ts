@@ -1,5 +1,5 @@
 import AppError from 'errors/app-error';
-import RouteModel, { IRoute } from 'models/route';
+import RouteModel from 'models/route';
 import { getCollectionRef, where, getDocs, orderBy, limit } from 'utils/firebase';
 
 class RouteRepository {
@@ -7,10 +7,11 @@ class RouteRepository {
 
   public async getRoutesByName({ name }: RouteModel): Promise<Array<RouteModel> | null> {
     try {
+      const nameInUpperCase = name?.toUpperCase();
       const collection = getCollectionRef(RouteRepository.collection);
       const whereQueries = where(collection, [
-        { fieldPath: 'name_insensitive', opStr: '>=', value: name },
-        { fieldPath: 'name_insensitive', opStr: '<=', value: `${name}\uf8ff` },
+        { fieldPath: 'name_insensitive', opStr: '>=', value: nameInUpperCase },
+        { fieldPath: 'name_insensitive', opStr: '<=', value: `${nameInUpperCase}\uf8ff` },
       ]);
       const orderByQueries = orderBy(whereQueries, [{ fieldPath: 'name_insensitive' }]);
       const limitQuery = limit(orderByQueries, 5);
@@ -19,6 +20,7 @@ class RouteRepository {
         Promise.reject(new AppError('Query exception when finding user by name')),
       );
 
+      console.log(queryResult);
       if (queryResult.empty) {
         return null;
       }
