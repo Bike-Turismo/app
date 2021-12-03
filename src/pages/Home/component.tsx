@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { FC } from 'react';
 import { Box, Button, Input, Flex, Text, Stack, ScrollView, PresenceTransition } from 'native-base';
-import ItemRoute from 'components/ItemRoute';
+import { ItemRoute } from 'components';
 import { Props } from './types';
 
 const Component: FC<Props> = ({
