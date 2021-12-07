@@ -3,6 +3,7 @@ import RouteModel from 'models/route';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import LocalizationRepository from 'repositories/localization';
 import RouteRepository from 'repositories/route';
+import { getDocumentAsync } from 'expo-document-picker';
 import { ICityState, Props } from './types';
 
 function getRoutes(city: string) {
@@ -60,6 +61,8 @@ const useController = (Component: FC<Props>) => {
   }, []);
 
   const handleOnSubmitSearch = useCallback(() => {
+    getDocumentAsync().then(res => console.log(res));
+
     const getResources = async () => {
       try {
         const newRoutes = await getRoutes(city);
