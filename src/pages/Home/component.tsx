@@ -11,6 +11,8 @@ const Component: FC<Props> = ({
   routes,
   routesHeading,
   localizationsAvailable,
+  handleOnPressLocalization,
+  handleOnIsFocusCity,
 }: Props) => {
   return (
     <ScrollView>
@@ -42,6 +44,8 @@ const Component: FC<Props> = ({
                 onChangeText={handleOnChangeCity}
                 placeholder="Nome da cidade"
                 onSubmitEditing={handleOnSubmitSearch}
+                onFocus={() => handleOnIsFocusCity(true)}
+                onBlur={() => handleOnIsFocusCity(false)}
               />
               {localizationsAvailable.map(localization => (
                 <Button
@@ -50,6 +54,7 @@ const Component: FC<Props> = ({
                   colorScheme="superLight"
                   borderRadius="none"
                   justifyContent="flex-start"
+                  onPress={() => handleOnPressLocalization(localization)}
                 >
                   <Text>
                     {localization.city}, {localization.state}

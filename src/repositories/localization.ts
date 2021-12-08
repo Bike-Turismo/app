@@ -19,7 +19,8 @@ class LocalizationRepository {
       }
 
       const buildLocalizationModels = (doc: QueryDocumentSnapshot<ILocalization>) =>
-        new LocalizationModel({ ...doc.data() });
+        new LocalizationModel({ ...doc.data(), id: doc.id });
+
       return queryResult.docs.map(buildLocalizationModels);
     } catch (err) {
       return Promise.reject(err);

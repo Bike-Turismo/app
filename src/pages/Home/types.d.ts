@@ -10,4 +10,6 @@ export interface Props {
   routes: Array<RouteModel>;
   routesHeading: string;
   localizationsAvailable: Array<LocalizationModel>;
+  handleOnPressLocalization(localization: LocalizationModel): void;
+  handleOnIsFocusCity(value: boolean): void;
 }

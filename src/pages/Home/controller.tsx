@@ -18,7 +18,7 @@ function getLocations() {
 }
 
 function filterLocalizations(localization: LocalizationModel, city: string) {
-  const localizationInUpperString = `${localization.city}, ${localization.state}`.toUpperCase();
+  const localizationInUpperString = localization.toString().toUpperCase();
   const inputCityUpperText = city.toUpperCase();
   const isThisLocalizationMatch = localizationInUpperString.includes(inputCityUpperText);
 
@@ -30,6 +30,7 @@ const useController = (Component: FC<Props>) => {
   const [localizationsAvailable, setLocalizationsAvailable] = useState<Array<LocalizationModel>>([]);
   const [localizationsFiltered, setLocalizationsFiltered] = useState<Array<LocalizationModel>>([]);
   const [currentLocalization, setCurrentLocalization] = useState<LocalizationModel | null>(null);
+  const [isLocalizationSelected, setIsLocalizationSelected] = useState(false);
   const [city, setCity] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [routes, setRoutes] = useState<Array<RouteModel>>([]);
@@ -38,14 +39,17 @@ const useController = (Component: FC<Props>) => {
   const cityState: ICityState = [city, (v: string) => setCity(v)];
 
   useEffect(() => {
-    setLocalizationsFiltered(() => {
-      if (city) {
-        const newLocalizations = localizationsAvailable.filter(localization => filterLocalizations(localization, city));
-        return newLocalizations;
-      }
-      return [];
-    });
-  }, [city, localizationsAvailable]);
+    !isLocalizationSelected &&
+      setLocalizationsFiltered(() => {
+        if (city) {
+          const newLocalizations = localizationsAvailable.filter(localization =>
+            filterLocalizations(localization, city),
+          );
+          return newLocalizations;
+        }
+        return [];
+      });
+  }, [city, localizationsAvailable, isLocalizationSelected]);
 
   useEffect(() => {
     const getResources = async () => {
@@ -61,15 +65,23 @@ const useController = (Component: FC<Props>) => {
     getResources();
   }, []);
 
+  const handleOnIsFocusCity = (isFocus: boolean) => {
+    setIsLocalizationSelected(!isFocus);
+  };
+
+  const handleOnPressLocalization = (localization: LocalizationModel) => {
+    setIsLocalizationSelected(true);
+    setLocalizationsFiltered([]);
+    setCity(localization.toString());
+  };
+
   const handleOnSubmitSearch = useCallback(() => {
     const getResources = async () => {
       try {
         const newRoutes = await getRoutes(city);
         newRoutes && setRoutes(newRoutes);
         setIsSearching(true);
-        const citye = 'Dois Vizinhos';
-        const state = 'PR';
-        setRoutesHeading(`Trilhas em ${citye}, ${state}`);
+        setRoutesHeading(`Trilhas em ${city}`);
       } catch (error) {
         console.error(error);
       }
@@ -86,6 +98,8 @@ const useController = (Component: FC<Props>) => {
       routes={routes}
       routesHeading={routesHeading}
       localizationsAvailable={localizationsFiltered}
+      handleOnPressLocalization={handleOnPressLocalization}
+      handleOnIsFocusCity={handleOnIsFocusCity}
     />
   );
 };
