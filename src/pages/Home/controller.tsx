@@ -39,8 +39,11 @@ const useController = (Component: FC<Props>) => {
 
   useEffect(() => {
     setLocalizationsFiltered(() => {
-      const newLocalizations = localizationsAvailable.filter(localization => filterLocalizations(localization, city));
-      return newLocalizations;
+      if (city) {
+        const newLocalizations = localizationsAvailable.filter(localization => filterLocalizations(localization, city));
+        return newLocalizations;
+      }
+      return [];
     });
   }, [city, localizationsAvailable]);
 
@@ -49,7 +52,6 @@ const useController = (Component: FC<Props>) => {
       try {
         const locations = await getLocations();
         setLocalizationsAvailable(locations);
-        setLocalizationsFiltered(locations);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
