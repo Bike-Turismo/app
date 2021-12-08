@@ -36,18 +36,25 @@ const Component: FC<Props> = ({
           </PresenceTransition>
 
           <Flex mt="20px" direction="row">
-            <Box flex={1}>
+            <Box flex={1} mr="20px">
               <Input
-                mr="20px"
                 value={city}
                 onChangeText={handleOnChangeCity}
                 placeholder="Nome da cidade"
                 onSubmitEditing={handleOnSubmitSearch}
               />
               {localizationsAvailable.map(localization => (
-                <Text>
-                  {localization.city}, {localization.state}
-                </Text>
+                <Button
+                  key={localization.id}
+                  p="8px"
+                  colorScheme="superLight"
+                  borderRadius="none"
+                  justifyContent="flex-start"
+                >
+                  <Text>
+                    {localization.city}, {localization.state}
+                  </Text>
+                </Button>
               ))}
             </Box>
             <Button mt={0} h="36px" onPress={handleOnSubmitSearch}>
