@@ -1,3 +1,4 @@
+import AppError from 'errors/app-error';
 import LocalizationModel from 'models/localization';
 import RouteModel from 'models/route';
 import React, { FC, useCallback, useEffect, useState } from 'react';
@@ -5,9 +6,9 @@ import LocalizationRepository from 'repositories/localization';
 import RouteRepository from 'repositories/route';
 import { ICityState, Props } from './types';
 
-function getRoutes(city: string) {
+function getRoutes(routeId: string) {
   const routerRepository = new RouteRepository();
-  const routeModel = new RouteModel({ name: city });
+  const routeModel = new RouteModel({ id: routeId });
 
   return routerRepository.getRoutesByCity(routeModel);
 }
@@ -26,7 +27,8 @@ function filterLocalizations(localization: LocalizationModel, city: string) {
 }
 
 const useController = (Component: FC<Props>) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingLocalizations, setIsLoadingLocalizations] = useState(false);
+  const [isLoadingRoutes, setIsLoadingRoutes] = useState(false);
   const [localizationsAvailable, setLocalizationsAvailable] = useState<Array<LocalizationModel>>([]);
   const [localizationsFiltered, setLocalizationsFiltered] = useState<Array<LocalizationModel>>([]);
   const [currentLocalization, setCurrentLocalization] = useState<LocalizationModel | null>(null);
@@ -54,12 +56,13 @@ const useController = (Component: FC<Props>) => {
   useEffect(() => {
     const getResources = async () => {
       try {
+        setIsLoadingLocalizations(true);
         const locations = await getLocations();
         setLocalizationsAvailable(locations);
-        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
+      setIsLoadingLocalizations(false);
     };
 
     getResources();
@@ -67,28 +70,46 @@ const useController = (Component: FC<Props>) => {
 
   const handleOnIsFocusCity = (isFocus: boolean) => {
     setIsLocalizationSelected(!isFocus);
+    if (isFocus) {
+      setRoutes([]);
+      setRoutesHeading('');
+    }
+    if (!isFocus) {
+      new Promise(r => {
+        setTimeout(r, 200);
+      }).then(() => setLocalizationsFiltered([]));
+    }
   };
 
   const handleOnPressLocalization = (localization: LocalizationModel) => {
     setIsLocalizationSelected(true);
-    setLocalizationsFiltered([]);
+    setCurrentLocalization(localization);
     setCity(localization.toString());
   };
 
   const handleOnSubmitSearch = useCallback(() => {
     const getResources = async () => {
       try {
-        const newRoutes = await getRoutes(city);
-        newRoutes && setRoutes(newRoutes);
-        setIsSearching(true);
-        setRoutesHeading(`Trilhas em ${city}`);
+        if (!currentLocalization || !currentLocalization.id) {
+          throw new AppError('Localization undefined');
+        }
+        setIsLoadingRoutes(true);
+        const newRoutes = await getRoutes(currentLocalization.id);
+        if (newRoutes.length > 0) {
+          newRoutes && setRoutes(newRoutes);
+          setIsSearching(true);
+          setRoutesHeading(`Trilhas em ${currentLocalization.toString()}`);
+        } else {
+          setRoutesHeading(`Nenhuma trilha encontrada em ${currentLocalization.toString()}`);
+        }
       } catch (error) {
         console.error(error);
       }
+      setIsLoadingRoutes(false);
     };
 
     getResources();
-  }, [city]);
+  }, [currentLocalization]);
 
   return (
     <Component
@@ -100,6 +121,8 @@ const useController = (Component: FC<Props>) => {
       localizationsAvailable={localizationsFiltered}
       handleOnPressLocalization={handleOnPressLocalization}
       handleOnIsFocusCity={handleOnIsFocusCity}
+      isLoadingLocalizations={isLoadingLocalizations}
+      isLoadingRoutes={isLoadingRoutes}
     />
   );
 };

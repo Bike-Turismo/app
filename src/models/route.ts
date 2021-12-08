@@ -3,7 +3,7 @@ import { ILocalization } from './localization';
 
 export interface IRoute {
   name?: string;
-  index?: string;
+  id?: string;
   description?: string;
   distance_in_kilo_meters?: number;
   preview_url?: string;
@@ -13,7 +13,7 @@ export interface IRoute {
 class RouteModel implements IRoute {
   private _name?: string;
 
-  private _index?: string;
+  private _id?: string;
 
   private _description?: string;
 
@@ -23,9 +23,9 @@ class RouteModel implements IRoute {
 
   private _localization?: DocumentReference<ILocalization>;
 
-  public constructor({ name, index, description, distance_in_kilo_meters, preview_url }: IRoute) {
+  public constructor({ name, id, description, distance_in_kilo_meters, preview_url }: IRoute) {
     if (name !== undefined) this.name = name;
-    if (index !== undefined) this.index = index;
+    if (id !== undefined) this.id = id;
     if (description !== undefined) this.description = description;
     if (distance_in_kilo_meters !== undefined) this.distance_in_kilo_meters = distance_in_kilo_meters;
     if (preview_url !== undefined) this.preview_url = preview_url;
@@ -39,12 +39,12 @@ class RouteModel implements IRoute {
     this._name = value;
   }
 
-  public get index(): string | undefined {
-    return this._index;
+  public get id(): string | undefined {
+    return this._id;
   }
 
-  public set index(value: string | undefined) {
-    this._index = value;
+  public set id(value: string | undefined) {
+    this._id = value;
   }
 
   public get description(): string | undefined {
@@ -82,7 +82,7 @@ class RouteModel implements IRoute {
   public toJSON() {
     return {
       name: this.name,
-      index: this.index,
+      id: this.id,
       description: this.description,
       distanceInKiloMeters: this.distance_in_kilo_meters,
       previewURL: this.preview_url,

@@ -12,4 +12,6 @@ export interface Props {
   localizationsAvailable: Array<LocalizationModel>;
   handleOnPressLocalization(localization: LocalizationModel): void;
   handleOnIsFocusCity(value: boolean): void;
+  isLoadingLocalizations: boolean;
+  isLoadingRoutes: boolean;
 }

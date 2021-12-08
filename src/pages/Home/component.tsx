@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { FC } from 'react';
-import { Box, Button, Input, Flex, Text, Stack, ScrollView, PresenceTransition, Heading } from 'native-base';
+import { Box, Button, Input, Flex, Text, Stack, ScrollView, PresenceTransition, Heading, Spinner } from 'native-base';
 import { ItemRoute } from 'components';
 import { Props } from './types';
 
@@ -13,7 +13,31 @@ const Component: FC<Props> = ({
   localizationsAvailable,
   handleOnPressLocalization,
   handleOnIsFocusCity,
+  isLoadingLocalizations,
+  isLoadingRoutes,
 }: Props) => {
+  if (isLoadingLocalizations) {
+    return (
+      <Box m="auto">
+        <Heading size="md" mb="10px">
+          Carregando cidades, aguarde...
+        </Heading>
+        <Spinner />
+      </Box>
+    );
+  }
+
+  const itemsRoute = isLoadingRoutes ? (
+    <Box m="auto">
+      <Heading size="md" mb="10px">
+        Carregando rotas, aguarde...
+      </Heading>
+      <Spinner />
+    </Box>
+  ) : (
+    routes.map(route => <ItemRoute key={route.id} route={route} />)
+  );
+
   return (
     <ScrollView>
       <Flex direction="column">
@@ -70,9 +94,7 @@ const Component: FC<Props> = ({
             {routesHeading}
           </Heading>
           <Stack pt="1" space={2}>
-            {routes.map(route => (
-              <ItemRoute key={route.index} route={route} />
-            ))}
+            {itemsRoute}
           </Stack>
         </Box>
       </Flex>
