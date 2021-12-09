@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import { SignIn } from 'pages';
-import { screenOptions as screenOptionsBase } from 'routes';
-import { PropsGroup } from './types';
+import { PropsGroupAuth } from './types';
 
-const AuthRoutes: FC<PropsGroup> = function ({ Stack }: PropsGroup) {
+const AuthRoutes: FC<PropsGroupAuth> = function ({ Stack, screenOptionsBase }: PropsGroupAuth) {
   const screenOptions = { ...screenOptionsBase, headerRight: undefined };
 
   return (

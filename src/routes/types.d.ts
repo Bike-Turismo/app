@@ -5,6 +5,7 @@ import {
   NativeStackNavigationOptions,
   NativeStackNavigatorProps,
   NativeStackNavigationEventMap,
+  ScreenOptions,
 } from '@react-navigation/core';
 
 export interface PropsGroup {
@@ -15,6 +16,10 @@ export interface PropsGroup {
     NativeStackNavigationEventMap,
     ({ initialRouteName, children, screenListeners, screenOptions, ...rest }: NativeStackNavigatorProps) => JSX.Element
   >;
+}
+
+export interface PropsGroupAuth extends PropsGroup {
+  screenOptionsBase: ScreenOptions;
 }
 
 export type AuthStackParamList = {

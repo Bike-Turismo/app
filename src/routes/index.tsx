@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -24,7 +24,7 @@ const Routes: FC = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={screenOptions}>
         {AppRoutes({ Stack })}
-        {AuthRoutes({ Stack })}
+        {AuthRoutes({ Stack, screenOptionsBase: screenOptions })}
       </Stack.Navigator>
     </NavigationContainer>
   );
