@@ -63,3 +63,6 @@ google-services.json
 firebase-config.json
 firebase-debug.log
 .firebase
+
+# env
+.env

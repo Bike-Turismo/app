@@ -2,6 +2,7 @@
 import React, { FC } from 'react';
 import { Box } from 'native-base';
 import GoogleMapReact from 'google-map-react';
+import config from 'utils/config';
 import { Props } from './types';
 
 const AnyReactComponent = ({ text, lat, lng }) => (
@@ -14,7 +15,7 @@ const Component: FC<Props> = ({}: Props) => {
   return (
     <Box h="100%" w="100%">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyDZER93lrGOjAgFKabvFkIgQZhzHlNnii4' }}
+        bootstrapURLKeys={{ key: config.MAPS_API_KEY }}
         defaultCenter={{ lat: 59.955413, lng: 30.337844 }}
         defaultZoom={12}
       >
