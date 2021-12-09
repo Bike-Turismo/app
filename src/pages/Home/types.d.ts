@@ -7,11 +7,12 @@ export interface Props {
   handleOnSubmitSearch(): void;
   isSearching: boolean;
   cityState: ICityState;
-  routes: Array<RouteModel>;
+  routeModels: Array<RouteModel>;
   routesHeading: string;
   localizationsAvailable: Array<LocalizationModel>;
   handleOnPressLocalization(localization: LocalizationModel): void;
   handleOnIsFocusCity(value: boolean): void;
   isLoadingLocalizations: boolean;
   isLoadingRoutes: boolean;
+  currentLocalization: LocalizationModel | null;
 }

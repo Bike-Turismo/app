@@ -35,7 +35,7 @@ const useController = (Component: FC<Props>) => {
   const [isLocalizationSelected, setIsLocalizationSelected] = useState(false);
   const [city, setCity] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const [routes, setRoutes] = useState<Array<RouteModel>>([]);
+  const [routeModels, setRouteModels] = useState<Array<RouteModel>>([]);
   const [routesHeading, setRoutesHeading] = useState('');
 
   const cityState: ICityState = [city, (v: string) => setCity(v)];
@@ -71,7 +71,7 @@ const useController = (Component: FC<Props>) => {
   const handleOnIsFocusCity = (isFocus: boolean) => {
     setIsLocalizationSelected(!isFocus);
     if (isFocus) {
-      setRoutes([]);
+      setRouteModels([]);
       setRoutesHeading('');
     }
     if (!isFocus) {
@@ -96,7 +96,7 @@ const useController = (Component: FC<Props>) => {
         setIsLoadingRoutes(true);
         const newRoutes = await getRoutes(currentLocalization.id);
         if (newRoutes.length > 0) {
-          newRoutes && setRoutes(newRoutes);
+          newRoutes && setRouteModels(newRoutes);
           setIsSearching(true);
           setRoutesHeading(`Trilhas em ${currentLocalization.toString()}`);
         } else {
@@ -116,13 +116,14 @@ const useController = (Component: FC<Props>) => {
       handleOnSubmitSearch={handleOnSubmitSearch}
       isSearching={isSearching}
       cityState={cityState}
-      routes={routes}
+      routeModels={routeModels}
       routesHeading={routesHeading}
       localizationsAvailable={localizationsFiltered}
       handleOnPressLocalization={handleOnPressLocalization}
       handleOnIsFocusCity={handleOnIsFocusCity}
       isLoadingLocalizations={isLoadingLocalizations}
       isLoadingRoutes={isLoadingRoutes}
+      currentLocalization={currentLocalization}
     />
   );
 };

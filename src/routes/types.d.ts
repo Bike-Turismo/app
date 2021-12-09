@@ -7,6 +7,8 @@ import {
   NativeStackNavigationEventMap,
   ScreenOptions,
 } from '@react-navigation/core';
+import LocalizationModel from 'models/localization';
+import RouteModel from 'models/route';
 
 export interface PropsGroup {
   Stack: TypedNavigator<
@@ -28,7 +30,10 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   Home: undefined;
-  Route: undefined;
+  Route: {
+    routeModel: RouteModel;
+    localizationModel: LocalizationModel;
+  };
 };
 
 export type RootStackParamList = AuthStackParamList & AppStackParamList;

@@ -7,7 +7,7 @@ import { Props } from './types';
 const Component: FC<Props> = ({
   previewURL,
   name,
-  distanceInKiloMeters,
+  distanceInKilometers,
   description,
   handleOnPressShowRoute,
 }: Props) => {
@@ -39,7 +39,7 @@ const Component: FC<Props> = ({
           ml="-0.5"
           mt="-1"
         >
-          {distanceInKiloMeters} KM
+          {distanceInKilometers} KM
         </Text>
         <Text flex={1} fontSize="xs" numberOfLines={2} ellipsizeMode="tail">
           {description}

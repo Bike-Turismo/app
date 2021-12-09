@@ -8,13 +8,14 @@ const Component: FC<Props> = ({
   cityState: [city, handleOnChangeCity],
   isSearching,
   handleOnSubmitSearch,
-  routes,
+  routeModels,
   routesHeading,
   localizationsAvailable,
   handleOnPressLocalization,
   handleOnIsFocusCity,
   isLoadingLocalizations,
   isLoadingRoutes,
+  currentLocalization,
 }: Props) => {
   if (isLoadingLocalizations) {
     return (
@@ -35,7 +36,9 @@ const Component: FC<Props> = ({
       <Spinner />
     </Box>
   ) : (
-    routes.map(route => <ItemRoute key={route.id} route={route} />)
+    routeModels.map(routeModel => (
+      <ItemRoute key={routeModel.id} routeModel={routeModel} localizationModel={currentLocalization} />
+    ))
   );
 
   return (

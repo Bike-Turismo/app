@@ -1,13 +1,14 @@
 import RouteModel from 'models/route';
 
 export interface PropsExternal {
-  route: RouteModel;
+  routeModel: RouteModel;
+  localizationModel: localizationModel;
 }
 
 export interface Props {
   previewURL: string;
   name: string;
-  distanceInKiloMeters: number;
+  distanceInKilometers: number;
   description: string;
   handleOnPressShowRoute(): void;
 }
