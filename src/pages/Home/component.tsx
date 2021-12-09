@@ -64,6 +64,7 @@ const Component: FC<Props> = ({
           <Flex mt="20px" direction="row">
             <Box flex={1} mr="20px">
               <Input
+                h="40px"
                 value={city}
                 onChangeText={handleOnChangeCity}
                 placeholder="Nome da cidade"
@@ -86,7 +87,7 @@ const Component: FC<Props> = ({
                 </Button>
               ))}
             </Box>
-            <Button mt={0} h="36px" onPress={handleOnSubmitSearch}>
+            <Button mt={0} h="40px" onPress={handleOnSubmitSearch}>
               Pesquisar
             </Button>
           </Flex>
