@@ -128,6 +128,18 @@ class RouteModel implements IRoute {
     this._elevation = value;
   }
 
+  public difficultyInPtBr() {
+    switch (this.difficulty) {
+      case 'easy':
+        return 'Fácil';
+      case 'medium':
+        return 'Médio';
+      case 'hard':
+      default:
+        return 'Difícil';
+    }
+  }
+
   public toJSON() {
     return {
       name: this.name,

@@ -1,5 +1,5 @@
-import { Component, ComponentSmall } from './component';
+import { MapsRouteInfo, MapsRouteInfoSmall } from './components/MapsRouteInfo';
 import useController from './controller';
 import { PropsExternal } from './types';
 
-export default (props: PropsExternal) => useController(Component, ComponentSmall, props);
+export default (props: PropsExternal) => useController(MapsRouteInfo, MapsRouteInfoSmall, props);

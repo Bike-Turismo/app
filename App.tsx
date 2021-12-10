@@ -19,6 +19,7 @@ const App: FC = () => {
         900: '#e7e5e4',
       },
     },
+    strictMode: 'err',
   });
 
   return (

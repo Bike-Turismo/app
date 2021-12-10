@@ -15,14 +15,20 @@ const Component: FC<Props> = ({ positionsCoords }: Props) => {
     googleMapsApiKey: config.MAPS_API_KEY,
   });
 
-  const onLoad = useCallback((mapLoaded: google.maps.Map) => {
+  const onLoad = useCallback((map: google.maps.Map) => {
     const bounds = new window.google.maps.LatLngBounds();
-    mapLoaded.fitBounds(bounds);
+    map.fitBounds(bounds);
   }, []);
 
   if (isLoaded && positionsCoords.length > 0) {
     return (
-      <GoogleMap mapContainerStyle={mapContainerStyle} center={positionsCoords[0]} onLoad={onLoad} zoom={12}>
+      <GoogleMap
+        options={{ fullscreenControl: false }}
+        mapContainerStyle={mapContainerStyle}
+        center={positionsCoords[0]}
+        onLoad={onLoad}
+        zoom={12}
+      >
         <Polyline path={positionsCoords} />
       </GoogleMap>
     );
