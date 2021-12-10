@@ -25,7 +25,10 @@ class RouteRepository {
         return [];
       }
 
-      const buildRouteModels = (doc: QueryDocumentSnapshot<IRoute>) => new RouteModel({ ...doc.data(), id: doc.id });
+      const buildRouteModels = (doc: QueryDocumentSnapshot<IRoute>) =>
+        // removing localization ref to prevent react navigation non-serializable warning
+        new RouteModel({ path: doc.ref.path, ...doc.data(), localization: undefined, id: doc.id });
+
       return queryResult.docs.map(buildRouteModels);
     } catch (err) {
       return Promise.reject(err);

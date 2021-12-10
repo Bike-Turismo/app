@@ -1,12 +1,10 @@
 import LocalizationModel from 'models/localization';
-import RouteModel, { RouteDifficulties } from 'models/route';
+import RouteModel from 'models/route';
 
 export interface Props {
-  name: string;
+  routeModel: routeModel;
   localizationModel: LocalizationModel;
-  difficulty: RouteDifficulties;
-  elevation: number;
-  distanceInKilometers: number;
+  positionsCoords: ICoord[];
 }
 
 export interface PropsExternal {

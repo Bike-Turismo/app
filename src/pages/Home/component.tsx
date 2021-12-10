@@ -37,7 +37,8 @@ const Component: FC<Props> = ({
     </Box>
   ) : (
     routeModels.map(routeModel => (
-      <ItemRoute key={routeModel.id} routeModel={routeModel} localizationModel={currentLocalization} />
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      <ItemRoute key={routeModel.id} routeModel={routeModel} localizationModel={currentLocalization!} />
     ))
   );
 

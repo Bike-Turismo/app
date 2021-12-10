@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { Box } from 'native-base';
 import { Props } from './types';
 
-const Component: FC<Props> = ({}: Props) => {
+const Component: FC<Props> = ({ positionsCoords }: Props) => {
   return <Box />;
 };
 

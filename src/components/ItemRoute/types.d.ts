@@ -1,8 +1,9 @@
+import LocalizationModel from 'models/localization';
 import RouteModel from 'models/route';
 
 export interface PropsExternal {
   routeModel: RouteModel;
-  localizationModel: localizationModel;
+  localizationModel: LocalizationModel;
 }
 
 export interface Props {

@@ -4,6 +4,7 @@ import { ILocalization } from './localization';
 export type RouteDifficulties = 'easy' | 'medium' | 'hard';
 
 export interface IRoute {
+  path?: string;
   name?: string;
   id?: string;
   description?: string;
@@ -15,6 +16,8 @@ export interface IRoute {
 }
 
 class RouteModel implements IRoute {
+  private _path?: string;
+
   private _name?: string;
 
   private _id?: string;
@@ -32,6 +35,7 @@ class RouteModel implements IRoute {
   private _elevation?: number;
 
   public constructor({
+    path,
     name,
     id,
     description,
@@ -41,6 +45,7 @@ class RouteModel implements IRoute {
     difficulty,
     elevation,
   }: IRoute) {
+    if (path !== undefined) this.path = path;
     if (name !== undefined) this.name = name;
     if (id !== undefined) this.id = id;
     if (description !== undefined) this.description = description;
@@ -49,6 +54,14 @@ class RouteModel implements IRoute {
     if (localization !== undefined) this.localization = localization;
     if (difficulty !== undefined) this.difficulty = difficulty;
     if (elevation !== undefined) this.elevation = elevation;
+  }
+
+  public get path(): string | undefined {
+    return this._path;
+  }
+
+  public set path(value: string | undefined) {
+    this._path = value;
   }
 
   public get name(): string | undefined {
