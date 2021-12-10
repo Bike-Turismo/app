@@ -20,13 +20,14 @@ const Component: FC<Props> = ({ positionsCoords }: Props) => {
     mapLoaded.fitBounds(bounds);
   }, []);
 
-  if (isLoaded) {
+  if (isLoaded && positionsCoords.length > 0) {
     return (
       <GoogleMap mapContainerStyle={mapContainerStyle} center={positionsCoords[0]} onLoad={onLoad} zoom={12}>
         <Polyline path={positionsCoords} />
       </GoogleMap>
     );
   }
+
   return null;
 };
 

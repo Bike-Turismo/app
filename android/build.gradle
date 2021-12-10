@@ -6,6 +6,8 @@ buildscript {
         minSdkVersion = 21
         compileSdkVersion = 30
         targetSdkVersion = 30
+        // Maps
+        playServicesVersion = "17.0.0"
         // Firebase
         googlePlayServicesAuthVersion = "19.2.0"
     }
