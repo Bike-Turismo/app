@@ -1,12 +1,14 @@
+import { useBreakpointValue } from 'native-base';
 import React, { FC } from 'react';
-
-import { Dimensions } from 'react-native';
 import { Props, PropsExternal } from './types';
 
-const windowWidth = Dimensions.get('window').width;
-
 const useController = (Component: FC<Props>, ComponentSmall: FC<Props>, { routeModel }: PropsExternal) => {
-  if (windowWidth < 500) {
+  const isScreenSmall = useBreakpointValue({
+    sm: false,
+    base: true,
+  });
+
+  if (isScreenSmall) {
     return <ComponentSmall routeModel={routeModel} />;
   }
 

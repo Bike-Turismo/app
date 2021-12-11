@@ -2,6 +2,7 @@
 import React, { FC } from 'react';
 import { Box } from 'native-base';
 import RouteModel from 'models/route';
+import { useWindowDimensions } from 'react-native';
 import { BodyContent } from '..';
 
 interface Props {
@@ -10,11 +11,15 @@ interface Props {
 }
 
 const Component: FC<Props> = ({ isAbsolute = false, routeModel }: Props) => {
+  const windowHeight = useWindowDimensions().height;
+
   if (isAbsolute) {
     return (
       <Box
         zIndex={10}
         position="absolute"
+        top={(windowHeight - 200) / 2}
+        right={5}
         bgColor="#fff"
         minW="250"
         rounded="lg"
